@@ -29,8 +29,10 @@ then
 
     azure storage blob download -q $CONTAINER_NAME $BLOB_NAME downloadedFcs
 
-    echo $BLOB_NAME > fcsPath
-
+    #remove the fcs extension
+    EXTENSION_IDX=`strindex "$BLOB_NAME" ".fcs"`
+    echo $BLOB_NAME | cut -c1-$EXTENSION_IDX > fcsPath
+    echo $CONTAINER_NAME > containerName
 else
     echo NO ANALYSIS FOUND
 fi

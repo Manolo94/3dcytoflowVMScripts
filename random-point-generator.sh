@@ -4,5 +4,5 @@ do
     b=$RANDOM
     c=$RANDOM
    
-    echo -e "$a, $b, $c" >> points.txt
+    echo -e "$a $b $c" >> points.txt
 done

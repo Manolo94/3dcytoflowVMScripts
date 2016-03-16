@@ -3,6 +3,8 @@
 x_array=()
 y_array=()
 z_array=()
+#FileName
+ResultFileName=results/`cat fcsPath`.json
 
 #keep track of points
 counter=0
@@ -34,79 +36,79 @@ done < "$1"
 #echo "$counter points saved. x[0] = ${x_array[0]} y[0] = ${y_array[0]} z[0] = ${z_array[0]}"
 
 #beginning of json
-echo -e "{" >> result.json
+echo -e "{" >> $ResultFileName
 
 END=$counter
 for i in `seq 0 3`;
 do
     if   [ $i -eq 0 ]
     then
-        echo -e "\t\"x\":\n\t{" >> result.json
+        echo -e "\t\"x\":\n\t{" >> $ResultFileName
         
         j=0
         while [ $j -lt $END ] 
         do
             if [ $j -ne $((END-1)) ]
             then
-                echo -e "\t\t\"$j\":${x_array[$j]}," >> result.json
+                echo -e "\t\t\"$j\":${x_array[$j]}," >> $ResultFileName
             else
-                echo -e "\t\t\"$j\":${x_array[$j]}" >> result.json
+                echo -e "\t\t\"$j\":${x_array[$j]}" >> $ResultFileName
             fi
             ((j++))   
         done
-        echo -e "\t}," >> result.json         
+        echo -e "\t}," >> $ResultFileName         
     elif [ $i -eq 1 ]
     then
-        echo -e "\t\"y\":\n\t{" >> result.json
+        echo -e "\t\"y\":\n\t{" >> $ResultFileName
 
         j=0
         while [ $j -lt $END ]
         do
             if [ $j -ne $((END-1)) ]
             then
-                echo -e "\t\t\"$j\":${y_array[$j]}," >> result.json
+                echo -e "\t\t\"$j\":${y_array[$j]}," >> $ResultFileName
             else
-                echo -e "\t\t\"$j\":${y_array[$j]}" >> result.json
+                echo -e "\t\t\"$j\":${y_array[$j]}" >> $ResultFileName
             fi
             ((j++))
         done
-        echo -e "\t}," >> result.json
+        echo -e "\t}," >> $ResultFileName
     elif [ $i -eq 2 ]
     then
-        echo -e "\t\"z\":\n\t{" >> result.json
+        echo -e "\t\"z\":\n\t{" >> $ResultFileName
 
         j=0
         while [ $j -lt $END ]
         do
             if [ $j -ne $((END-1)) ]
             then
-                echo -e "\t\t\"$j\":${z_array[$j]}," >> result.json
+                echo -e "\t\t\"$j\":${z_array[$j]}," >> $ResultFileName
             else
-                echo -e "\t\t\"$j\":${z_array[$j]}" >> result.json
+                echo -e "\t\t\"$j\":${z_array[$j]}" >> $ResultFileName
             fi
             ((j++))
         done
-        echo -e "\t}," >> result.json
+        echo -e "\t}," >> $ResultFileName
     else
-        echo -e "\t\"cid\":\n\t{" >> result.json
+        echo -e "\t\"cid\":\n\t{" >> $ResultFileName
 
         j=0
         while [ $j -lt $END ]
         do
             if [ $j -ne $((END-1)) ]
             then
-                echo -e "\t\t\"$j\":1.0," >> result.json
+                echo -e "\t\t\"$j\":1.0," >> $ResultFileName
             else
-                echo -e "\t\t\"$j\":1.0" >> result.json
+                echo -e "\t\t\"$j\":1.0" >> $ResultFileName
             fi
             ((j++))
         done
-        echo -e "\t}" >> result.json
+        echo -e "\t}" >> $ResultFileName
     fi    
 done
 
-echo -e "}" >> result.json
+echo -e "}" >> $ResultFileName
 
-chown luislavieri:sudo result.json
+chown luislavieri:sudo $ResultFileName
 
-chmod g+rw result.json
+chmod g+rw $ResultFileName

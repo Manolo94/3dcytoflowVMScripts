@@ -5,6 +5,7 @@ y_array=()
 z_array=()
 #FileName
 ResultFileName=results/`cat fcsPath`.json
+#ResultFileName=result.json
 
 #keep track of points
 counter=0
@@ -88,22 +89,22 @@ do
             fi
             ((j++))
         done
-        echo -e "\t}," >> $ResultFileName
-    else
-        echo -e "\t\"cid\":\n\t{" >> $ResultFileName
-
-        j=0
-        while [ $j -lt $END ]
-        do
-            if [ $j -ne $((END-1)) ]
-            then
-                echo -e "\t\t\"$j\":1.0," >> $ResultFileName
-            else
-                echo -e "\t\t\"$j\":1.0" >> $ResultFileName
-            fi
-            ((j++))
-        done
         echo -e "\t}" >> $ResultFileName
+    #else
+    #    echo -e "\t\"cid\":\n\t{" >> $ResultFileName
+    #	
+    #    j=0
+    #    while [ $j -lt $END ]
+    #    do
+    #        if [ $j -ne $((END-1)) ]
+    #        then
+    #            echo -e "\t\t\"$j\":1.0," >> $ResultFileName
+    #        else
+    #            echo -e "\t\t\"$j\":1.0" >> $ResultFileName
+    #        fi
+    #        ((j++))
+    #    done
+    #    echo -e "\t}" >> $ResultFileName
     fi    
 done
 

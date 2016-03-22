@@ -34,6 +34,8 @@ then
     echo $BLOB_NAME | cut -c1-$EXTENSION_IDX > fcsPath
     echo $CONTAINER_NAME > containerName
 else
+    > fcsPath
+    > containerName
     echo NO ANALYSIS FOUND
 fi
 

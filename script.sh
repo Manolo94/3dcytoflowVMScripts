@@ -5,29 +5,34 @@ then
     echo lock > analysisLock
 
     ./scripts/request_download_fcs.sh
-
-    fcsPath=`cat fcsPath`
-
-    cd git/sd_pfromd/
-    ./run_pfromd.sh -j1 -n5 ../../downloadedFcs/$fcsPath.fcs
-
-    if [ `cat resultPath` != "" ]
+    
+    if [ "`cat fcsPath`" != "" ]
     then
-        mkdir -p ../../results/$fcsPath
-        mv `cat resultPath`/points.txt ../../results/$fcsPath/
+        fcsPath=`cat fcsPath`
+
+        cd git/sd_pfromd/
+        ./run_pfromd.sh -j1 -n5 ../../downloadedFcs/$fcsPath.fcs
+
+        if [ "`cat resultPath`" != "" ]
+        then
+            mkdir -p ../../results/$fcsPath
+            mv `cat resultPath`/points.txt ../../results/$fcsPath/
     
-        cd ../..
-        #Luis	    
-        ./scripts/json-generator.sh results/$fcsPath/points.txt
+            cd ../..
+            #Luis	    
+            ./scripts/json-generator.sh results/$fcsPath/points.txt
     
-        #Ryan
-        ./scripts/upload_json_file.sh
+            #Ryan
+            ./scripts/upload_json_file.sh
+        else
+            echo Empty resultPath. Incomplete analysis
+        fi
     else
-        echo Empty resultPath. Incomplete analysis
+        echo NO ANALYSIS TO BE PROCESSED
     fi
 
-     > analysisLock
+    > analysisLock
 else
     echo This Machine is already processing an analysis
-fi
 
+fi

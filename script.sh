@@ -9,9 +9,11 @@ then
     if [ "`cat fcsPath`" != "" ]
     then
         fcsPath=`cat fcsPath`
+	jobsNumber=`cat jobsNumber`
+	pointsNumber=`cat pointsNumber`
 
         cd git/sd_pfromd/
-        ./run_pfromd.sh -j1 -n5 ../../downloadedFcs/$fcsPath.fcs
+        ./run_pfromd.sh -j$jobsNumber -n$pointsNumber ../../downloadedFcs/$fcsPath.fcs
 
         if [ "`cat resultPath`" != "" ]
         then
@@ -33,6 +35,13 @@ then
 
     > analysisLock
 else
+    VM_TOKEN=`cat vmToken`
+
+    cd git/sd_pfromd/
+    ETC=`./extractETA.sh`    
+    echo "ETA $ETC"
+
+    curl "http://3dcytoflow.azurewebsites.net/File/UpdateETC?totalSeconds=$ETC&vmId=$VM_TOKEN"
     echo This Machine is already processing an analysis
 
 fi

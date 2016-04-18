@@ -1,9 +1,10 @@
 export AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=3dcytoflowdb;AccountKey=X2tMrUiIOMrFaFvQyMnA3jm8j3NIKk5VuOf00CpuFb5W65kEE+Xf42hikxggRHgmeRuyeTzf8F3QxpmWMMxU2g=="
 
-VM_NAME=machine1
-VM_PSW=machine1psw
+VM_NAME=Simulate
+VM_PSW=AlmostThere
 
 VM_TOKEN=`curl "http://3dcytoflow.azurewebsites.net/File/GetToken?username=$VM_NAME&psw=$VM_PSW" | sed 's/\"//g'`
+echo $VM_TOKEN > vmToken
 
 VM_REQUEST_ANALYSIS_JSON=`curl "http://3dcytoflow.azurewebsites.net/File/RequestAnalysis?vmId=$VM_TOKEN"`
 
@@ -17,6 +18,12 @@ strindex() {
 if [ "$FOUND" == "true" ]
 then 
     VM_FCS_LOCATION=`echo $VM_REQUEST_ANALYSIS_JSON | jq ".FileLocation"`
+    VM_JOBS=`echo $VM_REQUEST_ANALYSIS_JSON | jq ".Jobs"`
+    VM_POINTS=`echo $VM_REQUEST_ANALYSIS_JSON | jq ".Points"`
+
+    echo "Points $VM_POINTS Jobs $VM_JOBS"
+    echo $VM_JOBS > jobsNumber
+    echo $VM_POINTS > pointsNumber
 
     echo ANALYSIS FOUND=$VM_FCS_LOCATION
 
